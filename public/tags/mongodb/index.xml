@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mongodb on ERR404 Blog</title>
+    <link>http://localhost:1313/tags/mongodb/</link>
+    <description>Recent content in Mongodb on ERR404 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr-fr</language>
+    <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mongodb &amp; Docker  - Expériences &amp; Authentification</title>
+      <link>http://localhost:1313/posts/mongo-db/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mongo-db/</guid>
+      <description>Workshop autour de mongodb déploiement et administration d&amp;#39;un container mongodb</description>
+    </item>
+  </channel>
+</rss>

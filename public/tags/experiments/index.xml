@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Experiments on ERR404 Blog</title>
+    <link>http://localhost:1313/tags/experiments/</link>
+    <description>Recent content in Experiments on ERR404 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr-fr</language>
+    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/experiments/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker Commands - Toolbox</title>
+      <link>http://localhost:1313/posts/docker-cmd/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/docker-cmd/</guid>
+      <description>Creation d&amp;#39;images docker, démarrage d&amp;#39;un container et gestion des network et volumes</description>
+    </item>
+  </channel>
+</rss>
