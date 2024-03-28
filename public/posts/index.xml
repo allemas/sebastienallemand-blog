@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>ERR404 Blog</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on ERR404 Blog</description>
+    <title>Posts on ERR404 Blog</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on ERR404 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr-fr</language>
     <lastBuildDate>Thu, 28 Mar 2024 12:10:40 +0100</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JDK 22 - What’s up doctor ?</title>
       <link>http://localhost:1313/posts/jdk-22/</link>
       <pubDate>Thu, 28 Mar 2024 12:10:40 +0100</pubDate>
       <guid>http://localhost:1313/posts/jdk-22/</guid>
       <description>I actually discovered what&amp;rsquo;s new in JDK22 and how Java became more attractive day by day. I&amp;rsquo;d like to share a compilation of what I have discovered and tried with my short conclusion and point of view.
-Before you start, you can find the release note here: https://jdk.java.net/22/release-notes
-JEP 456: Unnamed Variables &amp;amp; Patterns Sometimes you need to declare variables without using it, for matching patterns or for specific contexts. With JEP 456, you can now use _ instead of declaring the variable.</description>
+Before you start, you can find the release note here : https://jdk.java.net/22/release-notes
+JEP 456: Unnamed Variables &amp;amp; Patterns Sometimes you need to declare variables without using it, for matching patterns or for specific contexts.</description>
     </item>
   </channel>
 </rss>
