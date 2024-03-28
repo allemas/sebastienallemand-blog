@@ -118,6 +118,136 @@ JEP 456: Unnamed Variables &amp; Patterns Sometimes you need to declare variable
   <footer class="entry-footer"><span title='2024-03-28 12:10:40 +0100 CET'>March 28, 2024</span></footer>
   <a class="entry-link" aria-label="post link to JDK 22 - What’s up doctor ?" href="http://localhost:1313/posts/jdk-22/"></a>
 </article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Mongodb &amp; Docker  - Expériences &amp; Authentification
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Contexte Pré-requis : concepts de conteneurisation maitrisés.
+Déploiement d’un container mongodb et mongo-express pré-configuré avec docker-compose.
+Mongodb docker-compose version: &#39;3&#39; services: mongo: image: mongo environment: - MONGO_INITDB_ROOT_USERNAME=&lt;USER&gt; - MONGO_INITDB_ROOT_PASSWORD=&lt;PASSWORD&gt; - MONGO_INITDB_DATABASE=test volumes: - ./etc/mongo-volume:/data/db - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro ports: - &#34;27017:27017&#34; Description du conteneur mongo
+Basé sur l’image mongo Descriptions des variables d’environnement Création de volumes pour le partage de fichiers Configuration des flux (ports) ⚠️ Ne pas oublier de modifier les valeurs USER et PASSWORD...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-04-14 00:00:00 +0000 UTC'>April 14, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Mongodb &amp; Docker  - Expériences &amp; Authentification" href="http://localhost:1313/posts/mongo-db/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Kubernetes Commands - Toolbox 
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Collection de commandes et tips pour s’en sortir dans kubernetes
+Déploiment manuel ⛔️ Ne jamais, jamais, jamais déployer a la main ⛔️
+Utiliser :
+kubectl apply -f Investigations &amp; debug Quelques commande pour s’en sortir, quand ca va vraiment pas.
+kubectl logs &lt;podid&gt; kubectl describe pod &lt;podid&gt; kubectl describe deployer &lt;deploymentid&gt; kubectl describe service &lt;serviceid&gt; kubectl describe ingress &lt;ingressid&gt; kubectl get events kubectl top kubectl top &lt;pod_name&gt; logs tail -f /var/log/messages systemctl status kubelet journalctl -xe System Alias system Retourner toutes les ressources avec tous les namespaces...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-04-07 00:00:00 +0000 UTC'>April 7, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Kubernetes Commands - Toolbox " href="http://localhost:1313/posts/kubernetes-cmd/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">OpenSSL Toolbox
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html Verify SSL Certificate Get certificate openssl s_client -showcerts -connect &lt;domain_name&gt;:443 Certificate part CSR (Certificate Signing Request) CSR is an encoded text that is given to a Certificate Authority when you apply for an SSL Certificate. It’s generaly generated on the server where the certificate will be instaled. It contains some informatiosn that will be included in the certificate such as the organization name, common name (domain name), locality, and country....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-03-18 00:00:00 +0000 UTC'>March 18, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to OpenSSL Toolbox" href="http://localhost:1313/posts/openssl-toolbox/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Mini cluster Kubernetes avec rancher (k3s) 
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Découverte K3S Suivi d’installation d’un cluster mini-kubernetes. Par curiosité je souhaite simuler des systèmes complexe. J’aimerais découvrir de nouveaux concepts et apprendre des choses par cet apprentissage. Ce que je partage ici n’est que des expérimentations, elles ne sont peut être pas poussées jusqu’au bout niviable en prod. Simplement des sujets que je souhaite débunker.
+Outils utilisés Multipass K3S Création des machines Pour commencer nous allons créer 3 machines : 1 principales et 2 replications a l’aide de la CLI multipass...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-03-17 00:00:00 +0000 UTC'>March 17, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Mini cluster Kubernetes avec rancher (k3s) " href="http://localhost:1313/posts/k3s-rancher/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Construire un cluster de VM avec Multipass
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Il existe une multitupde d’outils pour virutaliser des machines (VM). Aujourd’hui j’ai décidé pour mes atelier et mes expérience d’utiliser Multipass, un outil de la team Canonical. Multipass est un outil de construction de VMs sous ubuntu, je compte utiliser cet outil pour construire très rapidement un environnement de developpement.
+Lancer une instance multipass launch --name &lt;VM_name&gt; lister toutes les instance multipass list Arreter / démarrer une instance multipass stop &lt;VM_name&gt; multipass start &lt;VM_name&gt; Supprimer une instance Attention, lorsque vous supprimez une instance elle ne l’est pas réellement....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-02-17 00:00:00 +0000 UTC'>February 17, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Construire un cluster de VM avec Multipass" href="http://localhost:1313/posts/canonical-multipass/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Legacy Code
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Si vous travaillez avec des développeurs vous avez certainement entendu parler de legacy. Un projet fréquemment perçu comme quelque chose de mystique, opaque, mal conçu faisant souvent référence à une période douloureuse ravivant de vieilles douleurs du passé…
+Mais qu’en est t’il vraiment ? Qu’appelle on Legacy ou bien Legacy Code ?
+J’aimerais partager avec vous ma définition: ce qu’est un projet legacy, le code legacy et comment on a fait pour en arriver la....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-02-15 00:00:00 +0000 UTC'>February 15, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Legacy Code" href="http://localhost:1313/legacy-code/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Legacy Code
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Si vous travaillez avec des développeurs vous avez certainement entendu parler de legacy. Un projet fréquemment perçu comme quelque chose de mystique, opaque, mal conçu faisant souvent référence à une période douloureuse ravivant de vieilles douleurs du passé…
+Mais qu’en est t’il vraiment ? Qu’appelle on Legacy ou bien Legacy Code ?
+J’aimerais partager avec vous ma définition: ce qu’est un projet legacy, le code legacy et comment on a fait pour en arriver la....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-02-15 00:00:00 +0000 UTC'>February 15, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Legacy Code" href="http://localhost:1313/legacy-code/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Docker Commands - Toolbox
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Dockerfile Une image Docker est crée a partir d’un fichier Dockerfile représentant la structure du conteneur. On peut y trouver plusieurs éléments comme des librairies logicielles, une application, de la configuration, l’utilisation de volumes etc. Une fois cette image construire il sera possible de lancer plusieurs container basés sur la même image.
+Construire une image docker build -t &lt;docker_repository&gt;/&lt;image_name&gt; . Le . défini que le dockerfile est disposé dans le dossier courant....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-18 00:00:00 +0000 UTC'>January 18, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Docker Commands - Toolbox" href="http://localhost:1313/posts/docker-cmd/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The Practical Test Pyramid
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>tldr; Passer directement a la présentation de Pyramid Testing
+Contexte Dans mon parcours, il m’a souvent été rappelé que les développeurs devaient tester leur code. Des tests fait manuellement, afin de vérifier que le développement effectué corresponde bien a ce qui a été spécifié.
+Le problème avec ces tests manuels est qu’il devient difficile de s’engager sur leur reussite et leur qualité dans le temps. De plus et pour plusieurs raisons, j’ai remarqué qu’il n’est pas rare en phase de recette de voir apparaitre en plus des erreurs de tests classiques :...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-06-20 00:00:00 +0000 UTC'>June 20, 2019</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to The Practical Test Pyramid" href="http://localhost:1313/practical-test-pyramid/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="http://localhost:1313/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">

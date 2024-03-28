@@ -17,5 +17,84 @@
 Before you start, you can find the release note here: https://jdk.java.net/22/release-notes
 JEP 456: Unnamed Variables &amp;amp; Patterns Sometimes you need to declare variables without using it, for matching patterns or for specific contexts. With JEP 456, you can now use _ instead of declaring the variable.</description>
     </item>
+    <item>
+      <title>Mongodb &amp; Docker  - Expériences &amp; Authentification</title>
+      <link>http://localhost:1313/posts/mongo-db/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mongo-db/</guid>
+      <description>Workshop autour de mongodb déploiement et administration d&amp;#39;un container mongodb</description>
+    </item>
+    <item>
+      <title>Kubernetes Commands - Toolbox </title>
+      <link>http://localhost:1313/posts/kubernetes-cmd/</link>
+      <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/kubernetes-cmd/</guid>
+      <description>Principales commandes kubernetes / Docker</description>
+    </item>
+    <item>
+      <title>OpenSSL Toolbox</title>
+      <link>http://localhost:1313/posts/openssl-toolbox/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/openssl-toolbox/</guid>
+      <description>https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html Verify SSL Certificate Get certificate openssl s_client -showcerts -connect &amp;lt;domain_name&amp;gt;:443 Certificate part CSR (Certificate Signing Request) CSR is an encoded text that is given to a Certificate Authority when you apply for an SSL Certificate. It&amp;rsquo;s generaly generated on the server where the certificate will be instaled. It contains some informatiosn that will be included in the certificate such as the organization name, common name (domain name), locality, and country.</description>
+    </item>
+    <item>
+      <title>Mini cluster Kubernetes avec rancher (k3s) </title>
+      <link>http://localhost:1313/posts/k3s-rancher/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/k3s-rancher/</guid>
+      <description>Mise en place d&amp;#39;un cluster kubernetes (k8s) avec k3s de rancher et multipass de canonical</description>
+    </item>
+    <item>
+      <title>Construire un cluster de VM avec Multipass</title>
+      <link>http://localhost:1313/posts/canonical-multipass/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/canonical-multipass/</guid>
+      <description>Mise en place d&amp;#39;un cluster kubernetes (k8s) avec k3s de rancher et multipass de canonical</description>
+    </item>
+    <item>
+      <title>Legacy Code</title>
+      <link>http://localhost:1313/legacy-code/</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/legacy-code/</guid>
+      <description>Qu&amp;#39;est-ce que le code legacy, comment une application devient legacy et ce que ca implique</description>
+    </item>
+    <item>
+      <title>Legacy Code</title>
+      <link>http://localhost:1313/legacy-code/</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/legacy-code/</guid>
+      <description>Qu&amp;#39;est-ce que le code legacy, comment une application devient legacy et ce que ca implique</description>
+    </item>
+    <item>
+      <title>Docker Commands - Toolbox</title>
+      <link>http://localhost:1313/posts/docker-cmd/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/docker-cmd/</guid>
+      <description>Creation d&amp;#39;images docker, démarrage d&amp;#39;un container et gestion des network et volumes</description>
+    </item>
+    <item>
+      <title>The Practical Test Pyramid</title>
+      <link>http://localhost:1313/practical-test-pyramid/</link>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/practical-test-pyramid/</guid>
+      <description>Présentation de la pyramide des tests. Test unitaire, tests d&amp;#39;intégration, test d&amp;#39;interface tout est présenté</description>
+    </item>
+    <item>
+      <title>The Practical Test Pyramid</title>
+      <link>http://localhost:1313/practical-test-pyramid/</link>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/practical-test-pyramid/</guid>
+      <description>Présentation de la pyramide des tests. Test unitaire, tests d&amp;#39;intégration, test d&amp;#39;interface tout est présenté</description>
+    </item>
+    <item>
+      <title>L&#39;art de nommer</title>
+      <link>http://localhost:1313/posts/naming-things/</link>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/naming-things/</guid>
+      <description>There are only two hard things in Computer Science: cache invalidation and naming things. — Phil Karlton
+Ca fait maintenant quelques années que je suis chargé de maintenir (legacy) et créer des systèmes en équipe et que je suis confronté aux problèmes de nommages.
+Selon moi, le nommage permet de mieux-transmettre le sens des composants que l’on utilise : un nommage compréhensif et cohérent avec le système permet aux nouveaux arrivants d&amp;rsquo;appréhender les concepts plus rapidement.</description>
+    </item>
   </channel>
 </rss>

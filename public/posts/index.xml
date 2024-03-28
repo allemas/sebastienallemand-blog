@@ -14,8 +14,17 @@
       <pubDate>Thu, 28 Mar 2024 12:10:40 +0100</pubDate>
       <guid>http://localhost:1313/posts/jdk-22/</guid>
       <description>I actually discovered what&amp;rsquo;s new in JDK22 and how Java became more attractive day by day. I&amp;rsquo;d like to share a compilation of what I have discovered and tried with my short conclusion and point of view.
-Before you start, you can find the release note here : https://jdk.java.net/22/release-notes
-JEP 456: Unnamed Variables &amp;amp; Patterns Sometimes you need to declare variables without using it, for matching patterns or for specific contexts.</description>
+Before you start, you can find the release note here: https://jdk.java.net/22/release-notes
+JEP 456: Unnamed Variables &amp;amp; Patterns Sometimes you need to declare variables without using it, for matching patterns or for specific contexts. With JEP 456, you can now use _ instead of declaring the variable.</description>
+    </item>
+    <item>
+      <title>L&#39;art de nommer</title>
+      <link>http://localhost:1313/posts/naming-things/</link>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/naming-things/</guid>
+      <description>There are only two hard things in Computer Science: cache invalidation and naming things. — Phil Karlton
+Ca fait maintenant quelques années que je suis chargé de maintenir (legacy) et créer des systèmes en équipe et que je suis confronté aux problèmes de nommages.
+Selon moi, le nommage permet de mieux-transmettre le sens des composants que l’on utilise : un nommage compréhensif et cohérent avec le système permet aux nouveaux arrivants d&amp;rsquo;appréhender les concepts plus rapidement.</description>
     </item>
   </channel>
 </rss>
