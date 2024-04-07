@@ -69,10 +69,12 @@ double result = (double) handle.invoke(arg1, arg2);
 
 > Note :There is no guarantee that the asType call is actually made. If the JVM can predict the results of making the call, it may perform adaptations directly on the caller's arguments, and call the target method handle according to its own exact type. see : https://wiki.openjdk.org/display/HotSpot/Deconstructing+MethodHandles
 
-### (IF needed !) read the result in of heap memory Area
+### (If needed !) read the result in of heap memory Area
+
 If, as with the `radixsort` function, there are no returns and the inserted data is modified directly, you should re-read the data in the (same :)) Area memory.
 (as is in the example below)
 
+### Entire example
 You will find here the example shared in the JEP, hope this will let you more the concepts : 
 ```java 
 // 1. Find foreign function on the C library path
@@ -80,25 +82,31 @@ Linker linker = Linker.nativeLinker();
 SymbolLookup stdlib = linker.defaultLookup();
 MethodHandle radixSort = linker.downcallHandle(
         stdlib.lookup("radixsort"), ...);
+
 // 2. Allocate on-heap memory to store four strings
 String[] javaStrings   = { "mouse", "cat", "dog", "car" };
+
 // 3. Allocate off-heap memory to store four pointers
 SegmentAllocator allocator = SegmentAllocator.implicitAllocator();
 MemorySegment offHeap  = allocator.allocateArray(ValueLayout.ADDRESS, javaStrings.length);
+
 // 4. Copy the strings from on-heap to off-heap
-for (int i = 0; i < javaStrings.length; i++) {
-// Allocate a string off-heap, then store a pointer to it
-MemorySegment cString = allocator.allocateUtf8String(javaStrings[i]);
+for(int i = 0; i < javaStrings.length; i++) {
+    // Allocate a string off-heap, then store a pointer to it
+    MemorySegment cString = allocator.allocateUtf8String(javaStrings[i]);
     offHeap.setAtIndex(ValueLayout.ADDRESS, i, cString);
 }
+
 // 5. Sort the off-heap data by calling the foreign function
-        radixSort.invoke(offHeap, javaStrings.length, MemoryAddress.NULL, '\0');
+radixSort.invoke(offHeap, javaStrings.length, MemoryAddress.NULL, '\0');
+
 // 6. Copy the (reordered) strings from off-heap to on-heap
 for (int i = 0; i < javaStrings.length; i++) {
 MemoryAddress cStringPtr = offHeap.getAtIndex(ValueLayout.ADDRESS, i);
 javaStrings[i] = cStringPtr.getUtf8String(0);
 }
-        assert Arrays.equals(javaStrings, new String[] {"car", "cat", "dog", "mouse"});  // true
+
+assert Arrays.equals(javaStrings, new String[] {"car", "cat", "dog", "mouse"});  // true
 ```
 
 You can go further in Memory management (sessions, segment, (un)safety) and Looking up foreign functions with openGL lookup example here : https://openjdk.org/jeps/424
