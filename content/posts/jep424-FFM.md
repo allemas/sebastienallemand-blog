@@ -1,6 +1,6 @@
 +++
 title = 'Foreign Function and Memory API (FFM)'
-date = 2024-04-07T14:10:40+01:00
+date = 2024-04-07T12:10:40+01:00
 draft = false
 +++
 
