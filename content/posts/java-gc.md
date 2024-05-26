@@ -1,6 +1,6 @@
 +++
 title = 'Java Garbage Collection'
-date = 2024-05-26T11:45:40+01:00
+date = 2024-05-26T10:45:40+01:00
 draft = false
 +++
 
