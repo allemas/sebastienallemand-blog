@@ -111,6 +111,33 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Mongodb &amp; Docker  - Expériences &amp; Authentification
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Contexte Pré-requis : concepts de conteneurisation maitrisés.
+Déploiement d’un container mongodb et mongo-express pré-configuré avec docker-compose.
+Mongodb docker-compose version: &#39;3&#39; services: mongo: image: mongo environment: - MONGO_INITDB_ROOT_USERNAME=&lt;USER&gt; - MONGO_INITDB_ROOT_PASSWORD=&lt;PASSWORD&gt; - MONGO_INITDB_DATABASE=test volumes: - ./etc/mongo-volume:/data/db - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro ports: - &#34;27017:27017&#34; Description du conteneur mongo
+Basé sur l’image mongo Descriptions des variables d’environnement Création de volumes pour le partage de fichiers Configuration des flux (ports) ⚠️ Ne pas oublier de modifier les valeurs USER et PASSWORD...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-04-14 00:00:00 +0000 UTC'>April 14, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Mongodb &amp; Docker  - Expériences &amp; Authentification" href="http://localhost:1313/posts/mongo-db/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">OpenSSL Toolbox
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html Verify SSL Certificate Get certificate openssl s_client -showcerts -connect &lt;domain_name&gt;:443 Certificate part CSR (Certificate Signing Request) CSR is an encoded text that is given to a Certificate Authority when you apply for an SSL Certificate. It’s generaly generated on the server where the certificate will be instaled. It contains some informatiosn that will be included in the certificate such as the organization name, common name (domain name), locality, and country....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-03-18 00:00:00 +0000 UTC'>March 18, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to OpenSSL Toolbox" href="http://localhost:1313/posts/openssl-toolbox/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Docker Commands - Toolbox
     </h2>
   </header>

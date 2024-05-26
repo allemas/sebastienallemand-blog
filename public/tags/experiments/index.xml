@@ -6,8 +6,22 @@
     <description>Recent content in Experiments on ERR404 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr-fr</language>
-    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/experiments/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mongodb &amp; Docker  - Expériences &amp; Authentification</title>
+      <link>http://localhost:1313/posts/mongo-db/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mongo-db/</guid>
+      <description>Workshop autour de mongodb déploiement et administration d&amp;#39;un container mongodb</description>
+    </item>
+    <item>
+      <title>OpenSSL Toolbox</title>
+      <link>http://localhost:1313/posts/openssl-toolbox/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/openssl-toolbox/</guid>
+      <description>https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html Verify SSL Certificate Get certificate openssl s_client -showcerts -connect &amp;lt;domain_name&amp;gt;:443 Certificate part CSR (Certificate Signing Request) CSR is an encoded text that is given to a Certificate Authority when you apply for an SSL Certificate. It&amp;rsquo;s generaly generated on the server where the certificate will be instaled. It contains some informatiosn that will be included in the certificate such as the organization name, common name (domain name), locality, and country.</description>
+    </item>
     <item>
       <title>Docker Commands - Toolbox</title>
       <link>http://localhost:1313/posts/docker-cmd/</link>

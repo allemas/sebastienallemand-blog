@@ -6,8 +6,15 @@
     <description>Recent content in Kubernetes on ERR404 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr-fr</language>
-    <lastBuildDate>Tue, 17 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Commands - Toolbox </title>
+      <link>http://localhost:1313/posts/kubernetes-cmd/</link>
+      <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/kubernetes-cmd/</guid>
+      <description>Principales commandes kubernetes / Docker</description>
+    </item>
     <item>
       <title>Mini cluster Kubernetes avec rancher (k3s) </title>
       <link>http://localhost:1313/posts/k3s-rancher/</link>

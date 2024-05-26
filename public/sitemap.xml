@@ -3,27 +3,81 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-03-28T12:10:40+01:00</lastmod>
+    <lastmod>2024-04-07T14:10:40+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-04-07T14:10:40+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/jdk-22/</loc>
     <lastmod>2024-03-28T12:10:40+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-03-28T12:10:40+01:00</lastmod>
+    <loc>http://localhost:1313/tags/devops/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/experiments/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/mongodb/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/mongo-db/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/kubernetes/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/kubernetes-cmd/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/openssl-toolbox/</loc>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/k3s-rancher/</loc>
+    <lastmod>2020-03-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/canonical/</loc>
+    <lastmod>2020-02-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/canonical-multipass/</loc>
+    <lastmod>2020-02-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/multipass/</loc>
+    <lastmod>2020-02-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/crafting/</loc>
-    <lastmod>2019-06-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/legacy-code/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/legacy-code/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/legacycode/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/refactoring/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/docker-cmd/</loc>
+    <lastmod>2020-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/tdd/</loc>
+    <lastmod>2019-06-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/practical-test-pyramid/</loc>
+    <lastmod>2019-06-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/practical-test-pyramid/</loc>
+    <lastmod>2019-06-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/ddd/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/naming-things/</loc>
-    <lastmod>2019-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/refactoring/</loc>
-    <lastmod>2019-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>

@@ -5,9 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>ERR404 Blog</title>
+<title>Foreign Function and Memory API (FFM) | ERR404 Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content=" - ERR404 Blog">
+<meta name="description" content="With the JDK 22 and the JEP 424, I discovered a new feature : Foreign Function and Memory API (FFM).
+Before diving into, let me introduce the motivations and goals behind this. Java Platform offers a rich foundation of tools, libraries and drivers (JDBC, HTTP, NIO, sockets), but sometimes developers have to deal with resources outside the JVM. FFM was created to interoperate with code and data outside of the Java runtime.">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/jep424-ffm/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -107,12 +108,91 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      
+      Foreign Function and Memory API (FFM)
     </h1>
-    <div class="post-meta">
+    <div class="post-meta"><span title='2024-04-07 12:10:40 +0100 +0100'>April 7, 2024</span>
 
 </div>
   </header> 
+  <div class="post-content"><p>With the JDK 22 and the JEP 424, I discovered a new feature  : Foreign Function and Memory API (FFM).</p>
+<p>Before diving into, let me introduce the motivations and goals behind this. Java Platform offers a rich foundation of tools, libraries and drivers (JDBC, HTTP, NIO, sockets), but sometimes developers have to deal with resources outside the JVM.
+FFM was created to interoperate with code and data outside of the Java runtime. By efficiently invoking foreign functions, and by safely accessing foreign memory, the API enables Java programs to call native libraries and process native data without the brittleness and danger of JNI.</p>
+<p>Basically, the FFM API resides in the <code>java.lang.foreign</code> package of the <code>java.base</code> module.</p>
+<p>Developer, allocate access and manage foreign memory and communicate outside the JVM.</p>
+<p><code>MemorySegment</code> represents a contiguous region of memory, while <code>MemoryAddress</code> provides a pointer to a specific memory location within a segment.
+<code>SegmentAllocator</code> interface allows to allocate memory segments with specific characteristics, such as size and alignment.</p>
+<p>To call a foreign function developer have <code>Linker, FunctionDescriptor, and SymbolLookup</code></p>
+<h2 id="how-to-use-it">How to use it<a hidden class="anchor" aria-hidden="true" href="#how-to-use-it">#</a></h2>
+<h3 id="instantiate-the-linker"><strong>Instantiate the Linker</strong><a hidden class="anchor" aria-hidden="true" href="#instantiate-the-linker">#</a></h3>
+<p>The Linker plays a vital role in enabling Java programs to communicate outside the JVM. Most of the time the developer will use the nativeLinker(), an optimized version for OS and Processor architecture. This ensures compatibility and efficiency when interacting with native libraries and functions.
+However, if your project has specific requirements or you&rsquo;re exploring alternative options, you may consider third-party native linkers. Be sure to evaluate them based on factors such as platform compatibility, performance, ease of use, community support, and reliability.</p>
+<h3 id="find-symbols-from-native-libraries"><strong>Find symbols from native libraries</strong><a hidden class="anchor" aria-hidden="true" href="#find-symbols-from-native-libraries">#</a></h3>
+<p>Symbols are functions or variables defined in external libraries that you want to access from your Java code.</p>
+<p>To do this there are 3 steps :</p>
+<ul>
+<li>get the address of a symbol in one or more libraries.</li>
+<li>specify the signature and calling convention of the function you want to invoke. <code>FunctionDescriptor</code> interface defines the parameters and return type of the function, as well as other characteristics such as calling conventions</li>
+<li>Once you have obtained the address of the symbol and defined its descriptor, you can transform it into a <code>MethodHandle</code> using the <code>MethodHandles API</code></li>
+</ul>
+<p>Example for a function that takes two integers as parameters and returns a double and his transformation to <code>MethodHandle</code> allows to invoke the function in java code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Define the parameter types and return type</span>
+</span></span><span style="display:flex;"><span>MemoryLayout intLayout <span style="color:#f92672">=</span> MemoryLayouts.<span style="color:#a6e22e">JAVA_INT</span>; <span style="color:#75715e">// Represents an int</span>
+</span></span><span style="display:flex;"><span>MemoryLayout doubleLayout <span style="color:#f92672">=</span> MemoryLayouts.<span style="color:#a6e22e">DOUBLE</span>; <span style="color:#75715e">// Represents a double</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Define the FunctionDescriptor</span>
+</span></span><span style="display:flex;"><span>FunctionDescriptor descriptor <span style="color:#f92672">=</span> FunctionDescriptor.<span style="color:#a6e22e">of</span>(CLinker.<span style="color:#a6e22e">C_DOUBLE</span>, intLayout, intLayout);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MethodHandle handle <span style="color:#f92672">=</span> lookup.<span style="color:#a6e22e">lookupFunction</span>(<span style="color:#e6db74">&#34;myFunction&#34;</span>, descriptor); 
+</span></span></code></pre></div><h3 id="allocate-memory-area">Allocate Memory Area<a hidden class="anchor" aria-hidden="true" href="#allocate-memory-area">#</a></h3>
+<p>To interact with external libraries that require manual memory management FFM allows developers to allocate and manage memory outside the Java Heap.
+Without this, parameters may not be readable for the underlying function, as the necessary memory space does not exist within the Java runtime.</p>
+<p>In reality, developers need to store pointers to data, rather than the data itself.
+This can be cumbersome, especially when dealing with complex data structures like lists, as each item in the list must be individually allocated.</p>
+<h3 id="invoke-the-function">Invoke the function<a hidden class="anchor" aria-hidden="true" href="#invoke-the-function">#</a></h3>
+<p>Invoke the function and pass the Memory Area containing the parameters.
+Thanks to the <code>MethodHandle</code> you can now invoke it.</p>
+<p>Suppose you have a native function <code>myFunction</code> defined in an external library that takes two integers as parameters and returns a double.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> (<span style="color:#66d9ef">double</span>) handle.<span style="color:#a6e22e">invoke</span>(arg1, arg2);
+</span></span></code></pre></div><blockquote>
+<p>Note :There is no guarantee that the asType call is actually made. If the JVM can predict the results of making the call, it may perform adaptations directly on the caller&rsquo;s arguments, and call the target method handle according to its own exact type. see : <a href="https://wiki.openjdk.org/display/HotSpot/Deconstructing+MethodHandles">https://wiki.openjdk.org/display/HotSpot/Deconstructing+MethodHandles</a></p>
+</blockquote>
+<h3 id="if-needed--read-the-result-in-of-heap-memory-area">(IF needed !) read the result in of heap memory Area<a hidden class="anchor" aria-hidden="true" href="#if-needed--read-the-result-in-of-heap-memory-area">#</a></h3>
+<p>If, as with the <code>radixsort</code> function, there are no returns and the inserted data is modified directly, you should re-read the data in the (same :)) Area memory.
+(as is in the example below)</p>
+<p>You will find here the example shared in the JEP, hope this will let you more the concepts :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 1. Find foreign function on the C library path</span>
+</span></span><span style="display:flex;"><span>Linker linker <span style="color:#f92672">=</span> Linker.<span style="color:#a6e22e">nativeLinker</span>();
+</span></span><span style="display:flex;"><span>SymbolLookup stdlib <span style="color:#f92672">=</span> linker.<span style="color:#a6e22e">defaultLookup</span>();
+</span></span><span style="display:flex;"><span>MethodHandle radixSort <span style="color:#f92672">=</span> linker.<span style="color:#a6e22e">downcallHandle</span>(
+</span></span><span style="display:flex;"><span>        stdlib.<span style="color:#a6e22e">lookup</span>(<span style="color:#e6db74">&#34;radixsort&#34;</span>), ...);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2. Allocate on-heap memory to store four strings</span>
+</span></span><span style="display:flex;"><span>String<span style="color:#f92672">[]</span> javaStrings   <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;mouse&#34;</span>, <span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;dog&#34;</span>, <span style="color:#e6db74">&#34;car&#34;</span> };
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 3. Allocate off-heap memory to store four pointers</span>
+</span></span><span style="display:flex;"><span>SegmentAllocator allocator <span style="color:#f92672">=</span> SegmentAllocator.<span style="color:#a6e22e">implicitAllocator</span>();
+</span></span><span style="display:flex;"><span>MemorySegment offHeap  <span style="color:#f92672">=</span> allocator.<span style="color:#a6e22e">allocateArray</span>(ValueLayout.<span style="color:#a6e22e">ADDRESS</span>, javaStrings.<span style="color:#a6e22e">length</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 4. Copy the strings from on-heap to off-heap</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> javaStrings.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Allocate a string off-heap, then store a pointer to it</span>
+</span></span><span style="display:flex;"><span>MemorySegment cString <span style="color:#f92672">=</span> allocator.<span style="color:#a6e22e">allocateUtf8String</span>(javaStrings<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>);
+</span></span><span style="display:flex;"><span>    offHeap.<span style="color:#a6e22e">setAtIndex</span>(ValueLayout.<span style="color:#a6e22e">ADDRESS</span>, i, cString);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 5. Sort the off-heap data by calling the foreign function</span>
+</span></span><span style="display:flex;"><span>        radixSort.<span style="color:#a6e22e">invoke</span>(offHeap, javaStrings.<span style="color:#a6e22e">length</span>, MemoryAddress.<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;\0&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 6. Copy the (reordered) strings from off-heap to on-heap</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> javaStrings.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>MemoryAddress cStringPtr <span style="color:#f92672">=</span> offHeap.<span style="color:#a6e22e">getAtIndex</span>(ValueLayout.<span style="color:#a6e22e">ADDRESS</span>, i);
+</span></span><span style="display:flex;"><span>javaStrings<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> cStringPtr.<span style="color:#a6e22e">getUtf8String</span>(0);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> Arrays.<span style="color:#a6e22e">equals</span>(javaStrings, <span style="color:#66d9ef">new</span> String<span style="color:#f92672">[]</span> {<span style="color:#e6db74">&#34;car&#34;</span>, <span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;dog&#34;</span>, <span style="color:#e6db74">&#34;mouse&#34;</span>});  <span style="color:#75715e">// true</span>
+</span></span></code></pre></div><p>You can go further in Memory management (sessions, segment, (un)safety) and Looking up foreign functions with openGL lookup example here : <a href="https://openjdk.org/jeps/424">https://openjdk.org/jeps/424</a></p>
+<p>As we can see here, the process is simpler than with JNI integration with less boilerplate code, Simplified API, lightweight memory management and  type safety.</p>
+<p>I personally hope this will be generalized more and used by most java developers, who today tend to over-eng their projects with dependencies that aren&rsquo;t always necessary, reducing the overall safety of their services.</p>
+<p>I&rsquo;d like to take this opportunity to share some feedback from the RocksDb teams who tested FFM : <a href="https://rocksdb.org/blog/2024/02/20/foreign-function-interface.html">https://rocksdb.org/blog/2024/02/20/foreign-function-interface.html</a></p>
+<p>Overall, Panama/FFI offers benefits such as improved performance, reduced boilerplate code, and enhanced interoperability, making it a promising technology for enhancing the RocksDB Java API and enabling new opportunities in the future.</p>
+<p>Hope you enjoyed this short introduction about FFM with some prémise of Panama’s Foreign-Memory Access API concepts. If I made a mistake let me know and contact me, nobody is perfect. Soon I&rsquo;d like to share some discoveries about JRE and Memory Areas, see ya :)</p>
+
+
+  </div>
 
   <footer class="post-footer">
     <ul class="post-tags">

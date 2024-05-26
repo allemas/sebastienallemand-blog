@@ -111,6 +111,22 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Kubernetes Commands - Toolbox 
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Collection de commandes et tips pour s’en sortir dans kubernetes
+Déploiment manuel ⛔️ Ne jamais, jamais, jamais déployer a la main ⛔️
+Utiliser :
+kubectl apply -f Investigations &amp; debug Quelques commande pour s’en sortir, quand ca va vraiment pas.
+kubectl logs &lt;podid&gt; kubectl describe pod &lt;podid&gt; kubectl describe deployer &lt;deploymentid&gt; kubectl describe service &lt;serviceid&gt; kubectl describe ingress &lt;ingressid&gt; kubectl get events kubectl top kubectl top &lt;pod_name&gt; logs tail -f /var/log/messages systemctl status kubelet journalctl -xe System Alias system Retourner toutes les ressources avec tous les namespaces...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-04-07 00:00:00 +0000 UTC'>April 7, 2020</span>&nbsp;·&nbsp;Allemand Sébastien</footer>
+  <a class="entry-link" aria-label="post link to Kubernetes Commands - Toolbox " href="http://localhost:1313/posts/kubernetes-cmd/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Mini cluster Kubernetes avec rancher (k3s) 
     </h2>
   </header>
