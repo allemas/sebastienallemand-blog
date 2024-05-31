@@ -6,17 +6,66 @@ draft = false
 
 Java’s Garbage Collector is one of the key features in the Java environment. When you develop in Java, the objects you instantiate are allocated in the heap of the Java Virtual Machine. In Java You don't have to think about how to allocate and déallocate objects in memory.
 
+For an object that is no longer used, the Garbage Collector find them by deduction.
+Most people think GarbageCollector find unused object in the heap space memory and remove them, in fact it's the active objects that are tracked, everything else is designed for garbage collection.
 
-For an object that is no longer used, the Garbage Collector finds them and removes them from the Heap memory space.  Periodically, the GC scans the heap memory space to detect which ones are no longer used.
-
-The process of garbage collection involve several steps :
-- Marking: Garbage collection starts by scanning all the heap space and mark all object references used by the JVM. All not marked objects are candidates for garbage collection.
-- Sweeping: Once the marking phase is done, the garbage collector sweeps the heap space and reclaims the memory that is used by the objects, the object is deallocated and the memory it used is returned to free memory space.
-- Compacting: depending on which GC you use, the sweeping phase can be followed by a compaction process. Where the objects reference are grouped together to minimize the memory fragmentation.
-
-
+Periodically, the GC scan objects located at the root of the heap memory space and defines the graph of alive objects.
 Without garbage collection, the Heap would eventually run out of memory, leading to a runtime `OutOfMemoryError`.
 
+There are 4 kind on GC Root objects in java:
+1. Class: Classes loaded by a system class loader; contains references to static variables as well
+2. Stack Local: Local variables and parameters to methods stored on the local stack
+3. Active Java Threads: All active Java threads
+4. JNI References: Native code Java objects created for JNI calls; contains local variables, parameters to JNI methods, and global JNI references
+
+## How it's works ? 
+
+The process of garbage collection involve 2 principal steps : track objects alive and remove those are not marked (not alive)
+
+### The Marking phase
+
+Garbage collection starts by scanning all `root objects` and follow the references from the root to other objects and marks every object found as alive.
+All not marked objects are candidates for garbage collection.
+
+![JVM GC Roots objects](/jvm-gc-roots.png)
+
+Object marked as alive are blue on the picture above.
+
+The important aspects to note about the marking phase is the application threads need to be stopped (you cannot traverse the graph if it keeps changing all the time).
+Good to know, when the application thread are temporarily stopped the JVM can engage in housekeeping activities, it's called `safepoint` and result in a "Stop the World" pause.
+`safepoint` can be triggered for different reasons but garbage collection is by far the most common reason for a `safepoint` to be introduced.
+
+The duration of this pause depend on the total number of alive objects. That why heap size doesn't change the duration of the marking phase.
+
+### Removing unreachable object
+
+Once the marking phase is done, the garbage collector can be divided in 3 main groups: sweeping, compacting and copying.
+
+- Sweep
+Mark and sweep is the simplest approach to garbage it's just ignoring the unmarked objects. 
+For example all the heap is used by unmarked object (not attached to a GC Root Object :)), the space used by those object is considered free and can be reused for allocating new objects.
+
+The tradeoff with this is that it implies to know each free memory region with its size, each of these are isolated if one object is bigger than all the regions available an error `OutOfMemoryError` occur
+This approach imply an overhead during the allocation phase, the JVM needs to search a region to allocating the new object.
+
+![JVM GC Roots objects](/jvm-gc-sweep.png)
+
+
+- Compact
+Mark-Sweep-Compact solve the tradeoff of Mark and sweep approach, by moving all marked (alive) object at the beginning of the heap memory region. 
+The downside with that it increase the GC Pause duration. We need to copy all objects to a new place and update the references objects graph. 
+Once the compaction is done, allocation is again extremely cheap with no fragmentation issues. 
+
+![JVM GC Roots objects](/jvm-gc-sweep-compact.png)
+
+
+- Copy
+Mark copy looks like Mark compact, but the difference here is the objects are reallocated to another region and not at the beginning of the memory.
+These approach has the principal advantage as coping can occur simultaneously with marking phase but more memory region will be needed, large enough to hold surviving objects.
+
+![JVM GC Roots objects](/jvm-gc-copy.png)
+
+  
 There are two main types of Garbage Collection algorithms: Full Garbage collection and Incremental Garbage collection
 
 **Full Garbage collection** is when the garbage collector _pauses_ the program’s execution and performs a search for garbage objects. 
@@ -32,47 +81,75 @@ I won't go into the details and describe all the CG events that exist. I'll save
 
 Memory management is a critical aspect in the JVM. The heap space is separated into different regions to optimize the garbage collection.
 
+### Stop the world !
+
+A GC stop-the-world is when the JVM halts the execution of all application threads to perform a GC operation, during a STW event **no application code runs and all processing is dedicated to garbage collection**. 
+A SWT event happens during : minor & major GC and certain phases of concurrent GCs (initial mark / remark phases in CMS).
+Any interruption of application execution due to garbage collection, implies GC pause. STW causes GC pause.
+
+
+As said before garbage collection is by far the most common reason for a `safepoint` to be introduced.
+
+I'll be writing about `safepoint` and its implications soon but in the meantime 
+> When at a safepoint, the thread’s representation of it’s Java machine state is well described, and can be safely manipulated and observed by other threads in the JVM. When not at a safepoint, the thread’s representation of the java machine state will NOT be manipulated by other threads in the JVM.
+> 
+> A Java thread is at a safepoint if it is blocked on a lock or synchronized block, waiting on a monitor, parked, or blocked on blocking IO. Essentially these all qualify as orderly de-scheduling events for the Java thread and as part of tidying up before put on hold the thread is brought to a safepoint.
+
+[More here](http://psy-lob-saw.blogspot.com/2015/12/safepoints.html)
+
+![JVM safepoint](/jvm-gc-safepineapples.jpg)
+
+## Visual GC représentation
+
 The memory space is separated in 3 parts, `Young generation`, `Old Generation` and `Permanent Generation`.
 
 ![JVM heap space representation](/jvm-heap-space.png)
 
 ### Young Generation
 
-Young generation is the initial destination for newly created objects, especially those placed in the `eden` space. When `eden` becomes full, a minor garbage collection starts and marked objects are moved to the survivor space (`S0` and `S1`) and those no longer in use (`unmarked`) will be removed.
+Young generation is the initial destination for newly created objects, especially those placed in the `eden` space. 
+When `eden` becomes full, a minor garbage collection starts and marked objects are moved to the survivor space (`S0` and `S1`) 
+and those no longer in use (`unmarked`) will be removed.
 
 This pattern never stops, every time `eden` is full a minor garbage collection starts all over again and objects already located in S0 are moved to S1 survivor space. Objects located in S1 and have survived long enough (threshold depend on the GC algorithm) move to the old generation space.
 
+![JVM gc eden](/jvm-gc-eden.png)
 
-_Remember_: Minor GC pause the application execution
+after a minor GC, all objects will be moved to Survivor1, and dead object unmark
+
+![JVM gc eden](/jvm-gc-sg0.png)
+
+New objects get allocated in eden space, some object become unreachable in both eden space and survivor1
+
+![JVM gc eden](/jvm-gc-sg0.1.png)
+
+After a second minor gc, all marked objects will be move to survivor2, and dead object unmark
+
+![JVM gc eden](/jvm-gc-sg1.png)
+
+After the third minor GC, all live objects will be move from both Eden and Survivor 2 to Survivor 1 with age increase and dead objects will be deleted.
+
+![JVM gc eden](/jvm-gc-sg1.1.png)
+
+to
+
+![JVM gc eden](/jvm-gc-sg1.2.png)
+
+
 
 ### Old Generation
 
-The old generation, also known as the tenured generation, stores long-lived objects.
-Objects located in the young generation and survived (depending on the GC algorithm) are moved to the old generation space.
+Objects located in the young generation and survived enough(depending on the GC algorithm) are moved to the old generation space.
 
+The old generation, also known as the tenured generation, stores long-lived objects.
 When an object is garbage collected in the old generation, it triggers a major garbage collection event. A major GC typically causes a pause in the application, the pause can be noticeable and may impact application performance, especially if the Old Generation has accumulated a significant amount of live data.
 
 _Information_: Major GC only targets the old generation heap memory space.
 
 ### Permanent generation
 
-Permanent generation is not populated by objects from the old generation. It doesn’t work like objects moved from the young generation to the old generation.
-
-The permanent generation is populated by the JVM to store metadata about classes and methods (class metadata, interned strings and statics variables).
-
-In `OpenJDK 17`, the permanent generation space has been replaced by a new metaspace, which is designed to be more efficient and flexible. `Metaspace` is not a contiguous heap area but is allocated in the native memory (to allow it to grow dynamically) and reduce `OutOfMemoryError` risks and improve performances, class loading/unloading can be more efficiently managed for applications that dynamically load many classes.
-
-
-### The GC Stop the world event !
-
-A GC stop-the-world is when the JVM halts the execution of all application threads to perform a GC operation, during a STW event no application code runs and all processing is dedicated to garbage collection. A SWT event happens during : minor & major GC and certain phases of concurrent GCs (initial mark / remark phases in CMS).
-
-Any interruption of application execution due to garbage collection, implies GC pause. STW causes GC pause.
-
-In most GC algorithms, a "Stop-the-World" (STW) is typically involved in a Full GC event.
-Full GC reclaim memory across the entire heap space memory, including both young and old generations and update references and move objects. To ensure correctness and synchronization, the JVM must halt the code execution.
-
-_Information_: A full GC occurs mainly when `old generation space` is exhausted or for an `allocation / promotion failure`.
+With `Java 8`, the permanent generation space has been replaced by a new metaspace, which is designed to be more efficient and flexible. 
+`Metaspace` is not a contiguous heap area but is allocated in the native memory (to allow it to grow dynamically) and reduce `OutOfMemoryError` risks and improve performances, class loading/unloading can be more efficiently managed for applications that dynamically load many classes.
 
 
 I hope  you enjoyed this short introduction about how GC works.
