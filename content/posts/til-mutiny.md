@@ -8,7 +8,7 @@ First of all : I wrote this article for myself so that I can refer back to it wh
 For a demo application, I needed to generate a large number of Kafka messages every second. Instead of using the standard Kafka client,
 The goal was simple: produce faked messages in continuous batches, without manually managing loops.
 
-In Quarkus, the recommended way to produce messages to Kafka is through Reactive Messaging. According to the documentation, you define a producer method annotated with @Outgoing. This method does not return a single message, but a Multi<T> object, which represents a stream of messages
+In Quarkus, the recommended way to produce messages to Kafka is through Reactive Messaging. According to the documentation, you define a producer method annotated with `@Outgoing`. This method does not return a single message, but a `Multi<T>` object, which represents a stream of messages
 
 While exploring the documentation,I discovered that streams can be **merged**, which makes it possible to create a stream creating every second a batch stream items that generates multiple messages
 
