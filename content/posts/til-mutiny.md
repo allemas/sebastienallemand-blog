@@ -22,6 +22,7 @@ ti.createFrom().ticks().every(Duration.ofSeconds(1))
                     .map(e -> AircraftMetrics.generate(generateAircraftId()))
        );
 
-In```
- this snippet, ticks().every(Duration.ofSeconds(1)) produces an item every second. Each tick triggers transformToMultiAndMerge, which generates 100 new items via Multi.createFrom().range(0, 100). Each item is then transformed into a simulated AircraftMetrics object. 
+```
+
+In this snippet, ticks().every(Duration.ofSeconds(1)) produces an item every second. Each tick triggers transformToMultiAndMerge, which generates 100 new items via Multi.createFrom().range(0, 100). Each item is then transformed into a simulated AircraftMetrics object. 
 The resulting stream emits a batch of 100 messages every second.
