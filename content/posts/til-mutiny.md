@@ -1,5 +1,5 @@
 +++
-title = 'TIL: Generating Kafka Message Batches Every Second Using Mutiny'
+title = 'TIL: Creating Periodic Streams with Mutiny in Quarkus'
 date = 2026-01-01T10:45:40+01:00
 draft = false
 +++
